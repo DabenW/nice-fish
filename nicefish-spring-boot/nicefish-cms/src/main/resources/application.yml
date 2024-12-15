@@ -1,0 +1,97 @@
+nicefish:
+    name: nicefish
+    version: 1.1.0
+    copyrightYear: 2019
+    demoEnabled: true
+    # 文件上传目录，请根据自己服务器情况配置
+    uploadPath: C:/nicefish/upload
+    #uploadPath: /Users/nanke/workSpace/uploadDir
+    addressEnabled: true
+
+server:
+    port: 8080
+    max-http-request-header-size: 65535
+    servlet:
+        context-path: /
+    forward-headers-strategy: NATIVE
+    tomcat:
+        uri-encoding: UTF-8
+        max-threads: 800
+        min-spare-threads: 30
+
+logging:
+    level:
+        com.nicefish: TRACE
+        org.springframework: TRACE
+        org.hibernate.SQL: TRACE
+        org.hibernate.type.descriptor.sql: TRACE
+        org.hibernate.engine.QueryParameters: TRACE
+        org.hibernate.engine.query.HQLQueryPlan: TRACE
+        org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+user:
+    password:
+        maxRetryCount: 5
+
+spring:
+    messages:
+        basename: static/i18n/messages
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    profiles:
+        active: druid
+    servlet:
+        multipart:
+            # 单个文件上传大小限制
+            max-file-size: 100MB
+            max-request-size: 500MB
+    devtools:
+        restart:
+            enabled: true
+            additional-paths: src/main/java
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+                order_inserts: true
+                order_updates: true
+                format_sql: true
+                hbm2ddl:
+                    auto: validate
+                jdbc:
+                    batch_size: 500
+                    batch_versioned_data: true
+        show-sql: true
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+# Shiro 相关的配置， ShiroConfig.java 配置类会读取这些配置项。
+shiro:
+    user:
+        loginUrl: /nicefish/auth/shiro/login
+        unauthorizedUrl: /nicefish/auth/shiro/unauth
+        indexUrl: /index
+        captchaEnabled: true
+        captchaType: math
+    cookie:
+        domain:
+        path: /
+        httpOnly: false
+        maxAge: 259200000 #ms
+        secure: false
+    session:
+        timeout: 259200000 #ms
+        dbSyncPeriod: 1
+        validationInterval: 10000 #ms
+        maxSession: -1
+        kickoutAfter: false
+
+xss:
+    enabled: true
+    excludes: /system/notice/*
+    urlPatterns: /system/*,/monitor/*,/tool/*

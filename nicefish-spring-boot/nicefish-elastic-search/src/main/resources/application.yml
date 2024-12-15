@@ -1,0 +1,29 @@
+server:
+    port: 8899
+    servlet:
+        context-path: /
+    tomcat:
+        uri-encoding: UTF-8
+        max-threads: 800
+        min-spare-threads: 30
+
+logging:
+    level:
+        com.nicefish: DEBUG
+        org.springframework: DEBUG
+        org.hibernate.SQL: DEBUG
+        org.hibernate.type.descriptor.sql: TRACE
+        org.hibernate.engine.QueryParameters: DEBUG
+        org.hibernate.engine.query.HQLQueryPlan: DEBUG
+        org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+        org.springframework.data.elasticsearch.client: DEBUG
+        org.elasticsearch.root: DEBUG
+
+spring:
+    elasticsearch:
+        uris: 192.168.23.130:9200
+
+xss:
+    enabled: true
+    excludes: /system/notice/*
+    urlPatterns: /system/*,/monitor/*,/tool/*
